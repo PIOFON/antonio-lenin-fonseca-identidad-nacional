@@ -1,16 +1,3 @@
 {
-  "name": "antonio-lenin-fonseca-identidad-nacional",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Quiz histórico sobre el Dr. Antonio Lenín Fonseca",
-  "main": "script.js",
-  "dependencies": {
-    "mongoose": "^8.0.0"
-  },
-  "scripts": {
-    "start": "node script.js"
-  },
-  "keywords": [],
-  "author": "Fernando Rojas",
-  "license": "ISC"
+  "cleanUrls": true
 }
