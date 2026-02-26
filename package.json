@@ -1,17 +1,16 @@
 {
-  "name": "web",
+  "name": "antonio-lenin-fonseca-identidad-nacional",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
+  "description": "Quiz histórico sobre el Dr. Antonio Lenín Fonseca",
   "main": "script.js",
+  "dependencies": {
+    "mongoose": "^8.0.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node script.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "mongodb": "^7.1.0",
-    "mongoose": "^9.2.3"
-  }
+  "author": "Fernando Rojas",
+  "license": "ISC"
 }
