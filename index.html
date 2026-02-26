@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto Histórico - Dr. Antonio Lenín Fonseca</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* Efecto Aro de Luz (Ripple) al tocar las opciones */
+        .boton-opcion {
+            position: relative;
+            overflow: hidden;
+        }
+        .efecto-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(45, 27, 78, 0.2);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Ocultar pantallas secundarias al inicio */
+        #pantalla-quiz, #pantalla-resultados, #modal-contexto {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-[#140524] min-h-screen font-sans text-gray-800 flex items-center justify-center p-4">
+
+    <div id="pantalla-registro" class="bg-[#2d1b4e] p-8 rounded-3xl shadow-2xl max-w-md w-full text-center text-white relative">
+        
+        <div class="w-38 h-38 mx-auto border-2 border-purple-500 rounded-full flex items-center justify-center mb-4 overflow-hidden bg-[#140524]">
+            <img src="public/logo.jpg" alt="Logo Universidad" class="w-full h-full object-cover" onerror="this.style.display='none'">
+        </div>
+        
+        <h1 class="text-3xl font-bold text-[#ff4d6d] mb-2">Reto Histórico</h1>
+        <p class="text-sm text-gray-300 mb-8">¿Cuánto sabes del Dr. Antonio Lenín Fonseca?</p>
+
+        <div class="space-y-4">
+            <input type="text" id="input-nombre" placeholder="Tu Nombre" class="w-full p-3 rounded-lg bg-[#f0f4ff] text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#ff4d6d]">
+            
+            <select id="input-area" class="w-full p-3 rounded-lg bg-[#140524] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-[#ff4d6d]">
+                <option value="">Selecciona tu Área de conocimiento</option>
+                <option value="Área de Ciencias Económicas y Administrativas">Área de Ciencias Económicas y Administrativas</option>
+                <option value="Área de Ciencia y Tecnología">Área de Ciencia y Tecnología</option>
+                <option value="Área de Educación y Humanidades">Área de Educación y Humanidades</option>
+            </select>
+
+            <button onclick="startQuiz()" class="w-full bg-[#ff4d6d] hover:bg-[#ff3355] text-white font-bold py-3 rounded-lg transition-colors mt-4 shadow-lg">
+                EMPEZAR
+            </button>
+        </div>
+    </div>
+
+    <div id="pantalla-quiz" class="bg-white p-8 rounded-3xl shadow-2xl max-w-md w-full">
+        <div class="flex justify-between items-center mb-6">
+            <span id="contador-pregunta" class="text-sm font-bold text-gray-500">Pregunta 1/10</span>
+            <span class="text-sm font-bold text-[#ff4d6d] bg-[#ff4d6d]/10 px-3 py-1 rounded-full">Puntos: <span id="marcador-puntos">0</span></span>
+        </div>
+        
+        <h2 id="texto-pregunta" class="text-xl font-bold text-center text-[#2d1b4e] mb-6">Aquí va la pregunta</h2>
+        
+        <div id="contenedor-opciones" class="space-y-3 flex flex-col">
+            </div>
+    </div>
+
+    <div id="pantalla-resultados" class="bg-white p-8 rounded-3xl shadow-2xl max-w-md w-full text-center">
+        <h2 class="text-3xl font-bold text-[#ff4d6d] mb-4">¡Reto Completado!</h2>
+        <p class="text-lg text-gray-600">Participante: <span id="resultado-nombre" class="font-bold text-[#2d1b4e]"></span></p>
+        <p class="text-lg text-gray-600 mb-6">Área de conocimiento: <span id="resultado-area" class="font-bold text-[#2d1b4e]"></span></p>
+        
+        <div class="bg-[#2d1b4e] text-white p-6 rounded-2xl mb-6 shadow-inner">
+            <p class="text-sm uppercase tracking-wider text-gray-300">Puntuación Final</p>
+            <p id="resultado-puntos" class="text-5xl font-bold text-[#ff4d6d] mt-2">0</p>
+        </div>
+
+        <div class="text-left max-h-48 overflow-y-auto mb-6 bg-gray-50 p-4 rounded-xl border">
+            <ul id="lista-reporte" class="text-sm space-y-3 text-gray-700">
+                </ul>
+        </div>
+
+        <button onclick="location.reload()" class="w-full bg-[#2d1b4e] hover:bg-[#140524] text-white font-bold py-3 rounded-lg transition-colors">
+            VOLVER A JUGAR
+        </button>
+    </div>
+
+    <div id="modal-contexto" class="fixed inset-0 bg-[#140524]/90 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-sm w-full overflow-hidden shadow-2xl transform transition-all">
+            
+            <div class="h-56 bg-gray-200 relative">
+                <img id="modal-imagen" src="" alt="Contexto Histórico" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <h3 id="modal-titulo" class="absolute bottom-4 left-4 text-3xl font-black text-white z-10 drop-shadow-md">Resultado</h3>
+            </div>
+            
+            <div class="p-6 text-center">
+                <p id="modal-bio" class="text-gray-700 mb-6 text-base leading-relaxed">
+                    Aquí va la biografía...
+                </p>
+                <button onclick="siguientePregunta()" class="w-full bg-[#ff4d6d] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#ff3355] transition-colors shadow-md">
+                    SIGUIENTE PREGUNTA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
