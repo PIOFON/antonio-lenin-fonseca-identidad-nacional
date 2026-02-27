@@ -61,9 +61,9 @@ const preguntas = [
     {
         pregunta: "¿Por qué es importante Antonio Lenin Fonseca para la memoria histórica de Nicaragua?",
         opciones: [
-            "Por qué su lucha ayuda a recordar los hechos históricos del país", 
-            "Por qué representa los valores de sacrificio, justicia y compromiso social", 
-            "Por qué su ejemplo permite que las nuevas generaciones conozcan y valoren la historia nacional", 
+            "Porque su lucha ayuda a recordar los hechos históricos del país", 
+            "Porque representa los valores de sacrificio, justicia y compromiso social", 
+            "Porque su ejemplo permite que las nuevas generaciones conozcan y valoren la historia nacional", 
             "Todas las anteriores"
         ],
         respuestaCorrecta: 3, 
@@ -256,4 +256,5 @@ function lanzarConfeti() {
             colors: ['#ff4d6d', '#2d1b4e', '#ffffff']
         });
     }
+
 }
